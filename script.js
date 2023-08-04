@@ -15,13 +15,18 @@ fetchButton.addEventListener('click', async () => {
         imageContainer.innerHTML = '';
         imageContainer.appendChild(image);
 
-        // Send image URL to the webhook
+        // Send image URL and message to the webhook
+        const webhookData = {
+            imageUrl,
+            message: 'test'
+        };
+
         await fetch(webhookURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ imageUrl }),
+            body: JSON.stringify(webhookData),
         });
     } catch (error) {
         console.error('An error occurred:', error);
