@@ -1,37 +1,29 @@
-const webhookUrl = 'https://webhook.site/92f623f6-9a2f-4e30-b81b-f03b5558f4ef';
-const imageElement = document.getElementById('image');
+// script.js
 const fetchButton = document.getElementById('fetchButton');
+const imageContainer = document.getElementById('imageContainer');
+const webhookURL = 'https://webhook.site/92f623f6-9a2f-4e30-b81b-f03b5558f4ef';
+const searchKeyword = 'chunie';
 
-fetchButton.addEventListener('click', () => {
-  fetchImage();
-});
+fetchButton.addEventListener('click', async () => {
+    try {
+        const response = await fetch(`https://e621.net/search/posts.json?tags=${searchKeyword}`);
+        const data = await response.json();
+        const imageUrl = data.posts[0].file.url;
 
-async function fetchImage() {
-  try {
-    const response = await fetch('https://your-image-source.com/api?keyword=chunie');
-    const data = await response.json();
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        imageContainer.innerHTML = '';
+        imageContainer.appendChild(image);
 
-    if (data.imageUrl) {
-      imageElement.src = data.imageUrl;
-      sendToWebhook(data.imageUrl);
+        // Send image URL to the webhook
+        await fetch(webhookURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ imageUrl }),
+        });
+    } catch (error) {
+        console.error('An error occurred:', error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function sendToWebhook(imageUrl) {
-  try {
-    await fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ imageUrl }),
-    });
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-fetchImage();
+});
