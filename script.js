@@ -1,7 +1,7 @@
 // script.js
 const fetchButton = document.getElementById('fetchButton');
 const imageContainer = document.getElementById('imageContainer');
-const webhookURL = 'https://webhook.site/92f623f6-9a2f-4e30-b81b-f03b5558f4ef';
+const webhookURL = 'https://92f623f6-9a2f-4e30-b81b-f03b5558f4ef@email.webhook.site';
 const searchKeyword = 'chunie';
 
 fetchButton.addEventListener('click', async () => {
