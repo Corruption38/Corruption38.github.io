@@ -1,5 +1,10 @@
 const webhookUrl = 'https://webhook.site/92f623f6-9a2f-4e30-b81b-f03b5558f4ef';
 const imageElement = document.getElementById('image');
+const fetchButton = document.getElementById('fetchButton');
+
+fetchButton.addEventListener('click', () => {
+  fetchImage();
+});
 
 async function fetchImage() {
   try {
